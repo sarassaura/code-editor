@@ -1,15 +1,23 @@
 import type { Component } from 'solid-js';
-import styles from './App.module.css';
+import Editor from './components/editor';
+import Output from './components/output';
 
 const App: Component = () => {
   return (
-    <div class={styles.App}>
-      <header class={styles.header}>
-        <p>
-          Hello World
-        </p>
+    <>
+      <header class='bg-slate-700'>
+        <nav class='flex justify-between'>
+          <p class='p-4'>Code Editor</p>
+        </nav>
       </header>
-    </div>
+      <main class="grid flex-grow grid-cols-2">
+        <Editor />
+        <Output />
+      </main>
+      <footer class='bg-slate-700 flex justify-center'>
+        <p class='p-4'>©sarassaura, 2023. All rights reserved.</p>
+      </footer>
+    </>
   );
 };
 
