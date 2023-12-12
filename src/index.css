@@ -2,10 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body, #root {
-  @apply flex flex-col min-h-full h-full bg-slate-500 text-slate-200;
+html,
+body,
+#root {
+	@apply flex flex-col min-h-full h-full bg-slate-500 text-slate-200;
 }
 
 #root {
-  @apply container mx-auto;
+	@apply container mx-auto;
+}
+
+.editor {
+	overflow-y: scroll;
+	text-wrap: wrap;
+	@apply bg-slate-900 h-full w-full p-4;
+}
+
+.editor:focus {
+	outline: none;
 }

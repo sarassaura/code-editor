@@ -10,7 +10,7 @@ const App: Component = () => {
           <p class='p-4'>Code Editor</p>
         </nav>
       </header>
-      <main class="grid flex-grow grid-cols-2">
+      <main class="grid flex-grow lg:grid-cols-2">
         <Editor />
         <Output />
       </main>

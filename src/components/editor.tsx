@@ -1,7 +1,7 @@
 export default function Editor() {
     return (
-        <div class="bg-slate-900 h-full w-full flex items-center justify-center">
+        <pre class="editor" contentEditable spellcheck={false}>
             Hello
-        </div>
+        </pre>
     )
 }
