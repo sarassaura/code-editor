@@ -5,19 +5,32 @@
 html,
 body,
 #root {
-	@apply flex flex-col min-h-full h-full bg-slate-500 text-slate-200;
+	@apply flex flex-col min-h-full h-full bg-slate-500 text-slate-200 overflow-hidden;
 }
 
 #root {
 	@apply container mx-auto;
 }
 
+main {
+	@apply grid flex-grow shrink-0;
+
+	@media (min-width: 1024px) {
+		& {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+}
+
 .editor {
-	overflow-y: scroll;
 	text-wrap: wrap;
-	@apply bg-slate-900 h-full w-full p-4;
+	@apply bg-slate-900 h-full w-full p-4 overflow-y-scroll;
 }
 
 .editor:focus {
 	outline: none;
+}
+
+.output {
+	@apply bg-slate-600 h-full w-full flex items-center justify-center shrink-0;
 }
