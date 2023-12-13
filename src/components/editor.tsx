@@ -1,4 +1,17 @@
+import { useCode } from '../context/code';
+
 export default function Editor() {
+	const [code, setCode] = useCode();
+
+	function update(
+		e: InputEvent & {
+			currentTarget: HTMLTextAreaElement;
+			target: HTMLTextAreaElement;
+		}
+	) {
+		setCode(e.target.value);
+	}
+
 	return (
 		<div class='wrapper'>
 			<div class='m-3 flex gap-2'>
@@ -7,15 +20,8 @@ export default function Editor() {
 				<div class='tabs'>html</div>
 				<div class='tabs'>css</div>
 			</div>
-			<textarea
-				class='editor'
-				contentEditable
-				spellcheck={false}
-				onChange={(e) => {
-					console.log(e);
-				}}
-			>
-				Hello
+			<textarea class='editor' spellcheck={false} onInput={update}>
+				Hello World!
 			</textarea>
 		</div>
 	);

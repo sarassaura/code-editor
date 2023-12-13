@@ -1,7 +1,7 @@
+import { useCode } from '../context/code';
+
 export default function Output() {
-    return (
-        <div class="output">
-            World!
-        </div>
-    )
+	const [code] = useCode();
+
+	return <div class='output'>{code()}</div>;
 }

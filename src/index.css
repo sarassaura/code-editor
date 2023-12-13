@@ -35,7 +35,7 @@ main {
 	white-space: break-spaces;
 	word-wrap: break-word;
 	text-wrap: wrap;
-	@apply p-4 bg-zinc-900 rounded text-lg;
+	@apply p-4 bg-zinc-900 rounded text-lg font-mono;
 	resize: none;
 }
 
@@ -48,5 +48,5 @@ main {
 }
 
 .output {
-	@apply bg-zinc-800 h-full w-full flex items-center justify-center shrink-0 grow-0 rounded;
+	@apply bg-zinc-800 h-full w-full flex shrink-0 grow-0 rounded;
 }
