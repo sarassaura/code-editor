@@ -5,32 +5,48 @@
 html,
 body,
 #root {
-	@apply flex flex-col min-h-full h-full bg-slate-500 text-slate-200 overflow-hidden;
+	@apply flex flex-col min-h-full h-full bg-zinc-950 text-slate-200;
 }
 
 #root {
-	@apply container mx-auto;
+	@apply container mx-auto max-h-full;
 }
 
 main {
-	@apply grid flex-grow shrink-0;
+	@apply grid flex-grow shrink gap-4 my-2;
+	grid-template-columns: minmax(0, 1fr);
+	grid-template-rows: minmax(0, calc(50vh - 16px)) minmax(0, calc(50vh - 16px));
 
 	@media (min-width: 1024px) {
 		& {
-			grid-template-columns: repeat(2, 1fr);
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+			grid-template-rows: minmax(0, calc(100vh - 16px));
 		}
 	}
 }
 
+.wrapper {
+	@apply bg-zinc-900 flex flex-col rounded;
+}
+
 .editor {
+	height: 100%;
+	overflow-y: scroll;
+	white-space: break-spaces;
+	word-wrap: break-word;
 	text-wrap: wrap;
-	@apply bg-slate-900 h-full w-full p-4 overflow-y-scroll;
+	@apply p-4 bg-zinc-900 rounded text-lg;
+	resize: none;
 }
 
 .editor:focus {
 	outline: none;
 }
 
+.tabs {
+	@apply bg-zinc-800 p-2 rounded;
+}
+
 .output {
-	@apply bg-slate-600 h-full w-full flex items-center justify-center shrink-0;
+	@apply bg-zinc-800 h-full w-full flex items-center justify-center shrink-0 rounded;
 }
