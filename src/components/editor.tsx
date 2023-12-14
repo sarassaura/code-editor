@@ -54,7 +54,7 @@ export default function Editor() {
 				<div class='tabs'>css</div>
 			</div>
 			<textarea
-				class='editor !text-lg !hover:text-lg !active:text-lg !focus:text-lg !selection:text-lg'
+				class='editor !text-lg hover:text-lg active:text-lg focus:text-lg selection:text-lg'
 				spellcheck={false}
 				autocomplete='off'
 				autoCapitalize='off'
