@@ -13,7 +13,7 @@ export default function Editor() {
 	function findLimit() {
 		const one = document.querySelector('.one-letter') as HTMLSpanElement;
 		const parentWidth = (one.parentElement as HTMLDivElement)?.offsetWidth - 32;
-		const letter = one.offsetWidth / 10000;
+		const letter = one.offsetWidth / 10;
 
 		setLimit(parentWidth / letter);
 	}
@@ -47,7 +47,7 @@ export default function Editor() {
 	return (
 		<div class='wrapper'>
 			<span class='absolute font-mono text-lg one-letter invisible'>
-				<For each={Array(10000)}>{() => <span>X</span>}</For>
+				<For each={Array(10)}>{() => <span>X</span>}</For>
 			</span>
 			<div class='m-3 flex gap-2'>
 				<div class='tabs border'>javascript</div>
@@ -55,7 +55,7 @@ export default function Editor() {
 				<div class='tabs'>html</div>
 				<div class='tabs'>css</div>
 			</div>
-			<pre class='editor' spellcheck={false} contenteditable>
+			<pre class='editor' spellcheck={false} contentEditable>
 				Hello World!
 			</pre>
 			<div class='m-2 flex justify-end gap-2'>
