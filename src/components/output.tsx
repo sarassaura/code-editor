@@ -8,5 +8,9 @@ export default function Output() {
 		console.log('The code is: ', code());
 	});
 
-	return <div class='output'>{code()}</div>;
+	return (
+		<div class='output'>
+			<span class='shrink-0 grow-0'>{code()}</span>
+		</div>
+	);
 }
