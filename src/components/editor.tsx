@@ -6,8 +6,13 @@ export default function Editor() {
 	const [lines, setLines] = createSignal<number>();
 	const [limit, setLimit] = createSignal<number>();
 
-	function update(editor: HTMLElement) {
-		setCode(editor.innerHTML);
+	function update(
+		e: InputEvent & {
+			currentTarget: HTMLTextAreaElement;
+			target: HTMLTextAreaElement;
+		}
+	) {
+		setCode(e.target.value);
 	}
 
 	function findLimit() {
@@ -19,18 +24,11 @@ export default function Editor() {
 	}
 
 	onMount(() => {
-		const editor = document.querySelector('.editor') as HTMLElement;
-
-		setCode(editor.innerHTML);
-		editor.addEventListener('input', () => update(editor));
-
 		findLimit();
 		window.addEventListener('resize', findLimit);
 	});
 
 	onCleanup(() => {
-		const editor = document.querySelector('.editor') as HTMLElement;
-		editor.removeEventListener('input', () => update(editor));
 		window.removeEventListener('resize', findLimit);
 	});
 
@@ -45,7 +43,7 @@ export default function Editor() {
 	});
 
 	return (
-		<div class='wrapper'>
+		<div class='wrapper relative'>
 			<span class='absolute font-mono text-lg one-letter invisible'>
 				<For each={Array(10)}>{() => <span>X</span>}</For>
 			</span>
@@ -55,9 +53,16 @@ export default function Editor() {
 				<div class='tabs'>html</div>
 				<div class='tabs'>css</div>
 			</div>
-			<pre class='editor' spellcheck={false} contentEditable>
+			<textarea
+				class='editor !text-lg !hover:text-lg !active:text-lg !focus:text-lg !selection:text-lg'
+				spellcheck={false}
+				autocomplete='off'
+				autoCapitalize='off'
+				data-gramm='false'
+				onInput={update}
+			>
 				Hello World!
-			</pre>
+			</textarea>
 			<div class='m-2 flex justify-end gap-2'>
 				<span>Lines: {lines()}</span>
 				<span>Chars: {code().length}</span>
