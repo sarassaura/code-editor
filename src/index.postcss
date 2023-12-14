@@ -13,7 +13,7 @@ body,
 }
 
 main {
-	@apply grid flex-grow gap-4 m-2 h-full overflow-y-hidden;
+	@apply grid flex-grow gap-4 m-2 h-full overflow-hidden;
 	grid-template-columns: minmax(0, 1fr);
 	grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
 
@@ -26,7 +26,7 @@ main {
 }
 
 .wrapper {
-	@apply bg-zinc-900 flex flex-col rounded;
+	@apply bg-zinc-900 flex flex-col rounded overflow-x-hidden;
 }
 
 .editor {

@@ -6,13 +6,8 @@ export default function Editor() {
 	const [lines, setLines] = createSignal<number>();
 	const [limit, setLimit] = createSignal<number>();
 
-	function update(
-		e: InputEvent & {
-			currentTarget: HTMLTextAreaElement;
-			target: HTMLTextAreaElement;
-		}
-	) {
-		setCode(e.target.value);
+	function update(editor: HTMLElement) {
+		setCode(editor.innerHTML);
 	}
 
 	function findLimit() {
@@ -24,15 +19,19 @@ export default function Editor() {
 	}
 
 	onMount(() => {
+		const editor = document.querySelector('.editor') as HTMLElement;
+
+		setCode(editor.innerHTML);
+		editor.addEventListener('input', () => update(editor));
+
+		findLimit();
 		window.addEventListener('resize', findLimit);
 	});
 
 	onCleanup(() => {
+		const editor = document.querySelector('.editor') as HTMLElement;
+		editor.removeEventListener('input', () => update(editor));
 		window.removeEventListener('resize', findLimit);
-	});
-
-	onMount(() => {
-		findLimit();
 	});
 
 	createEffect(() => {
@@ -56,9 +55,9 @@ export default function Editor() {
 				<div class='tabs'>html</div>
 				<div class='tabs'>css</div>
 			</div>
-			<textarea class='editor' spellcheck={false} onInput={update}>
+			<pre class='editor' spellcheck={false} contenteditable>
 				Hello World!
-			</textarea>
+			</pre>
 			<div class='m-2 flex justify-end gap-2'>
 				<span>Lines: {lines()}</span>
 				<span>Chars: {code().length}</span>
