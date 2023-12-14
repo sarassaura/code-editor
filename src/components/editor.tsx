@@ -1,10 +1,10 @@
-import { createEffect, createSignal } from 'solid-js';
+import { For, createEffect, createSignal, onCleanup, onMount } from 'solid-js';
 import { useCode } from '../context/code';
 
 export default function Editor() {
 	const [code, setCode] = useCode();
 	const [lines, setLines] = createSignal<number>();
-	const [char, setChar] = createSignal<number>();
+	const [limit, setLimit] = createSignal<number>();
 
 	function update(
 		e: InputEvent & {
@@ -15,15 +15,28 @@ export default function Editor() {
 		setCode(e.target.value);
 	}
 
+	function findLimit() {
+		const one = document.querySelector('.one-letter') as HTMLSpanElement;
+		const parentWidth = (one.parentElement as HTMLDivElement)?.offsetWidth - 32;
+		const letter = one.offsetWidth / 10000;
+
+		setLimit(parentWidth / letter);
+	}
+
+	onMount(() => {
+		window.addEventListener('resize', findLimit);
+	});
+
+	onCleanup(() => {
+		window.removeEventListener('resize', findLimit);
+	});
+
+	onMount(() => {
+		findLimit();
+	});
+
 	createEffect(() => {
 		let lines = code().match(/\n/g)?.length;
-		let chars = code().match(/./g)?.length;
-
-		if (chars != undefined) {
-			setChar(chars);
-		} else {
-			setChar(code().length);
-		}
 
 		if (lines !== undefined) {
 			setLines(lines + 1);
@@ -34,6 +47,9 @@ export default function Editor() {
 
 	return (
 		<div class='wrapper'>
+			<span class='absolute font-mono text-lg one-letter invisible'>
+				<For each={Array(10000)}>{() => <span>X</span>}</For>
+			</span>
 			<div class='m-3 flex gap-2'>
 				<div class='tabs border'>javascript</div>
 				<div class='tabs'>markdown</div>
@@ -43,9 +59,14 @@ export default function Editor() {
 			<textarea class='editor' spellcheck={false} onInput={update}>
 				Hello World!
 			</textarea>
-			<div class='m-2 flex justify-end gap-4'>
+			<div class='m-2 flex justify-end gap-2'>
 				<span>Lines: {lines()}</span>
-				<span>Chars: {char()}</span>
+				<span>Chars: {code().length}</span>
+				<span>|</span>
+				<span>Ln {0},</span>
+				<span>Col {0}</span>
+				<span>|</span>
+				<span>Wrap: {Math.floor(limit()!)}ch</span>
 			</div>
 		</div>
 	);
