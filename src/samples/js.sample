@@ -1,0 +1,9 @@
+const example = []
+
+example.push('1');
+example.push('2');
+example.push('3');
+
+example.forEach((num) => {
+    console.log(num);
+});

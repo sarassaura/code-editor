@@ -1,6 +1,5 @@
 import { For, createEffect, createSignal, onCleanup, onMount } from 'solid-js';
 import { useCode } from '../context/code';
-import Sample from '../samples/html.sample?raw';
 
 export default function Editor() {
 	const [code, setCode] = useCode();
@@ -64,14 +63,14 @@ export default function Editor() {
 				<div class='tabs'>css</div>
 			</div>
 			<textarea
-				class='editor !text-lg hover:text-lg active:text-lg focus:text-lg selection:text-lg'
+				class='editor text-lg'
 				spellcheck={false}
 				autocomplete='off'
 				autoCapitalize='off'
 				data-gramm='false'
 				onInput={update}
 			>
-				{Sample}
+				{code()}
 			</textarea>
 			<div class='m-2 flex justify-end gap-2'>
 				<span>Lines: {lines()}</span>

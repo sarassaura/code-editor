@@ -1,7 +1,9 @@
-<h1>Sphinx of black quartz, judge my vow.</h1>
-<h2>Sphinx of black quartz, judge my vow.</h2>
-<h3>Sphinx of black quartz, judge my vow.</h3>
-<h4>Sphinx of black quartz, judge my vow.</h4>
-<h5>Sphinx of black quartz, judge my vow.</h5>
-<h6>Sphinx of black quartz, judge my vow.</h6>
-<p>What is a pangram?</p>
+<div class="container">
+    <h1>Sphinx of black quartz, judge my vow.</h1>
+    <h2>Sphinx of black quartz, judge my vow.</h2>
+    <h3>Sphinx of black quartz, judge my vow.</h3>
+    <h4>Sphinx of black quartz, judge my vow.</h4>
+    <h5>Sphinx of black quartz, judge my vow.</h5>
+    <h6>Sphinx of black quartz, judge my vow.</h6>
+    <p>What is a pangram?</p>
+</div>

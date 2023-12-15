@@ -6,10 +6,12 @@ import {
 	type Signal
 } from 'solid-js';
 
+import Sample from '../samples/html.sample?raw';
+
 const CodeContext = createContext<Signal<string>>();
 
 export const CodeProvider: ParentComponent = (props) => {
-	const [code, setCode] = createSignal('');
+	const [code, setCode] = createSignal(Sample);
 
 	return (
 		<CodeContext.Provider value={[code, setCode]}>
