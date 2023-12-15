@@ -1,7 +1,7 @@
 /* @refresh reload */
 import { render } from 'solid-js/web';
 
-import './index.postcss';
+import './styles/index.postcss';
 import App from './App';
 
 const root = document.getElementById('root');

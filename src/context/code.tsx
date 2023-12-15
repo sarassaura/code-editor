@@ -9,7 +9,7 @@ import {
 const CodeContext = createContext<Signal<string>>();
 
 export const CodeProvider: ParentComponent = (props) => {
-	const [code, setCode] = createSignal('Hello World!');
+	const [code, setCode] = createSignal('');
 
 	return (
 		<CodeContext.Provider value={[code, setCode]}>

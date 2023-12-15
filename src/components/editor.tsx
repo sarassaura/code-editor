@@ -1,5 +1,6 @@
 import { For, createEffect, createSignal, onCleanup, onMount } from 'solid-js';
 import { useCode } from '../context/code';
+import Sample from '../samples/html.sample?raw';
 
 export default function Editor() {
 	const [code, setCode] = useCode();
@@ -34,7 +35,7 @@ export default function Editor() {
 	});
 
 	createEffect(() => {
-		let lines = code().match(/\n/g)?.length;
+		let lines = code().match(/\r\n|\r|\n/g)?.length;
 		let chars = code().match(/./g)?.length;
 
 		if (lines !== undefined) {
@@ -70,7 +71,7 @@ export default function Editor() {
 				data-gramm='false'
 				onInput={update}
 			>
-				Hello World!
+				{Sample}
 			</textarea>
 			<div class='m-2 flex justify-end gap-2'>
 				<span>Lines: {lines()}</span>
