@@ -37,8 +37,8 @@ type Tabs = {
 };
 
 type CodeStore = [
-	get: Store<Tabs>,
-	set: SetStoreFunction<Tabs>,
+	Store<Tabs>,
+	SetStoreFunction<Tabs>,
 	Accessor<string>,
 	Setter<string>
 ];
