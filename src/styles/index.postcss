@@ -8,10 +8,6 @@ body,
 	@apply flex flex-col h-full bg-zinc-950 text-slate-200 overflow-x-hidden;
 }
 
-#root {
-	@apply container mx-auto;
-}
-
 main {
 	@apply grid flex-grow gap-4 m-2 h-full overflow-hidden;
 	grid-template-columns: minmax(0, 1fr);
@@ -43,7 +39,21 @@ main {
 }
 
 .tabs {
-	@apply bg-zinc-800 p-2 rounded;
+	@apply bg-zinc-800 p-2 rounded flex gap-3;
+}
+
+.tabs {
+	& > p {
+		@apply rounded;
+	}
+}
+
+.close {
+	@apply bg-zinc-800 px-2 rounded brightness-125 hover:bg-zinc-900;
+}
+
+.open {
+	@apply bg-zinc-800 px-[14px] rounded hover:brightness-125;
 }
 
 .output {

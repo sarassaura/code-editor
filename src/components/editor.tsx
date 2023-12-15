@@ -1,11 +1,15 @@
 import { For, createEffect, createSignal, onCleanup, onMount } from 'solid-js';
-import { useCode } from '../context/code';
+import { useTabs } from '../context/code';
 
 export default function Editor() {
-	const [code, setCode] = useCode();
+	const [tabs, SetTabs, active, setActive] = useTabs();
 	const [lines, setLines] = createSignal<number>();
 	const [chars, setChars] = createSignal<number>();
 	const [limit, setLimit] = createSignal<number>();
+
+	// function removeTab(name: string) {
+	// 	setAllTabs((prev) => prev.filter((tab) => tab !== name));
+	// }
 
 	function update(
 		e: InputEvent & {
@@ -13,7 +17,7 @@ export default function Editor() {
 			target: HTMLTextAreaElement;
 		}
 	) {
-		setCode(e.target.value);
+		SetTabs(active(), 'code', e.target.value);
 	}
 
 	function findLimit() {
@@ -34,8 +38,8 @@ export default function Editor() {
 	});
 
 	createEffect(() => {
-		let lines = code().match(/\r\n|\r|\n/g)?.length;
-		let chars = code().match(/./g)?.length;
+		let lines = tabs[active()].code.match(/\r\n|\r|\n/g)?.length;
+		let chars = tabs[active()].code.match(/./g)?.length;
 
 		if (lines !== undefined) {
 			lines++;
@@ -44,7 +48,7 @@ export default function Editor() {
 		}
 
 		if (chars == undefined) {
-			chars = code().length - lines + 1;
+			chars = tabs[active()].code.length - lines + 1;
 		}
 
 		setLines(lines);
@@ -56,11 +60,16 @@ export default function Editor() {
 			<span class='absolute font-mono text-lg one-letter invisible'>
 				<For each={Array(10)}>{() => <span>X</span>}</For>
 			</span>
-			<div class='m-3 flex gap-2'>
-				<div class='tabs border'>javascript</div>
-				<div class='tabs'>markdown</div>
-				<div class='tabs'>html</div>
-				<div class='tabs'>css</div>
+			<div class='m-3 flex gap-3'>
+				{Object.keys(tabs).map((name) => (
+					<div class={`tabs ${name == active() && 'border'}`}>
+						<button onClick={() => setActive(name)}>{name}</button>
+						{/* <button class='close' onClick={() => removeTab(name)}>
+							x
+						</button> */}
+					</div>
+				))}
+				<button class='tabs open'>+</button>
 			</div>
 			<textarea
 				class='editor text-lg'
@@ -70,7 +79,7 @@ export default function Editor() {
 				data-gramm='false'
 				onInput={update}
 			>
-				{code()}
+				{tabs[active()].code}
 			</textarea>
 			<div class='m-2 flex justify-end gap-2'>
 				<span>Lines: {lines()}</span>
