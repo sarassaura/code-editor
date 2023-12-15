@@ -4,6 +4,7 @@ import { useCode } from '../context/code';
 export default function Editor() {
 	const [code, setCode] = useCode();
 	const [lines, setLines] = createSignal<number>();
+	const [chars, setChars] = createSignal<number>();
 	const [limit, setLimit] = createSignal<number>();
 
 	function update(
@@ -34,12 +35,20 @@ export default function Editor() {
 
 	createEffect(() => {
 		let lines = code().match(/\n/g)?.length;
+		let chars = code().match(/./g)?.length;
 
 		if (lines !== undefined) {
-			setLines(lines + 1);
+			lines++;
 		} else {
-			setLines(1);
+			lines = 1;
 		}
+
+		if (chars == undefined) {
+			chars = code().length - lines + 1;
+		}
+
+		setLines(lines);
+		setChars(chars);
 	});
 
 	return (
@@ -65,7 +74,7 @@ export default function Editor() {
 			</textarea>
 			<div class='m-2 flex justify-end gap-2'>
 				<span>Lines: {lines()}</span>
-				<span>Chars: {code().length}</span>
+				<span>Chars: {chars()}</span>
 				<span>|</span>
 				<span>Ln {0},</span>
 				<span>Col {0}</span>
