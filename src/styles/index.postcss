@@ -38,22 +38,31 @@ main {
 	outline: none;
 }
 
-.tabs {
-	@apply bg-zinc-800 p-2 rounded flex gap-3;
-}
+.tab-container {
+	@apply flex gap-3 m-3 overflow-y-hidden overflow-x-scroll shrink-0;
 
-.tabs {
-	& > p {
-		@apply rounded;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+
+	&::-webkit-scrollbar {
+		display: none;
 	}
 }
 
+.tab-items {
+	@apply bg-zinc-800 rounded flex items-center justify-center;
+}
+
+.tab-name {
+	@apply gap-2 p-2;
+}
+
 .close {
-	@apply bg-zinc-800 px-2 rounded brightness-125 hover:bg-zinc-900;
+	@apply bg-zinc-800 px-2 mr-2 rounded brightness-125 hover:bg-zinc-900;
 }
 
 .open {
-	@apply bg-zinc-800 px-[14px] rounded hover:brightness-125;
+	@apply bg-zinc-800 px-4 rounded hover:brightness-125;
 }
 
 .output {

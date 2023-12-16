@@ -80,16 +80,18 @@ export default function Editor() {
 			<span class='absolute font-mono text-lg one-letter invisible'>
 				<For each={Array(10)}>{() => <span>X</span>}</For>
 			</span>
-			<div class='m-3 flex gap-3'>
+			<div class='tab-container '>
 				{Object.keys(tabs).map((name) => (
-					<div class={`tabs ${name == active() && 'border'}`}>
-						<button onClick={() => changeTabs(name)}>{name}</button>
+					<div class={`tab-items ${name == active() ? 'border' : ''}`}>
+						<button onClick={() => changeTabs(name)} class='tab-name'>
+							{name}
+						</button>
 						<button class='close' onClick={() => removeTab(name)}>
 							x
 						</button>
 					</div>
 				))}
-				<button class='tabs open'>+</button>
+				<button class='tab-items open'>+</button>
 			</div>
 			<textarea
 				class='editor text-lg'
