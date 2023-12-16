@@ -10,11 +10,13 @@ export default function Editor() {
 	let wrapperRef: HTMLTextAreaElement | undefined;
 
 	function removeTab(name: string) {
-		SetTabs((prev) => {
-			delete prev[name];
-			console.log('🚀 ~ prev:', prev);
-			return prev;
-		});
+		const anotherTab = Object.keys(tabs).filter((l) => l !== name);
+
+		if (anotherTab.length > 0) {
+			setActive(anotherTab[0]);
+		}
+
+		SetTabs(name, undefined);
 	}
 
 	function update(
@@ -30,7 +32,7 @@ export default function Editor() {
 		setActive(name);
 
 		if (wrapperRef && wrapperRef.value) {
-			wrapperRef.value = tabs[active()].code;
+			wrapperRef.value = tabs[active()]?.code || '';
 		}
 	}
 
@@ -52,8 +54,8 @@ export default function Editor() {
 	});
 
 	createEffect(() => {
-		let lines = tabs[active()].code.match(/\r\n|\r|\n/g)?.length;
-		let chars = tabs[active()].code.match(/./g)?.length;
+		let lines = tabs[active()]?.code.match(/\r\n|\r|\n/g)?.length;
+		let chars = tabs[active()]?.code.match(/./g)?.length;
 
 		if (lines !== undefined) {
 			lines++;
@@ -62,7 +64,7 @@ export default function Editor() {
 		}
 
 		if (chars == undefined) {
-			chars = tabs[active()].code.length - lines + 1;
+			chars = tabs[active()]?.code?.length! - lines + 1;
 		}
 
 		setLines(lines);
@@ -94,7 +96,7 @@ export default function Editor() {
 				onInput={update}
 				ref={wrapperRef}
 			>
-				{tabs[active()].code}
+				{tabs[active()]?.code}
 			</textarea>
 			<div class='m-2 flex justify-end gap-2'>
 				<span>Lines: {lines()}</span>

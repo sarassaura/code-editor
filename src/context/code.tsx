@@ -33,7 +33,7 @@ type Tab = {
 };
 
 type Tabs = {
-	[key: string]: Tab;
+	[key: string]: Tab | undefined;
 };
 
 type CodeStore = [

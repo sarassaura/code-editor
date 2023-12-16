@@ -5,7 +5,7 @@ export default function Output() {
 
 	return (
 		<div class='output'>
-			<span class='shrink-0 grow-0'>{tabs[active()].code}</span>
+			<span class='shrink-0 grow-0'>{tabs[active()]?.code}</span>
 		</div>
 	);
 }
