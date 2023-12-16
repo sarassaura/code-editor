@@ -17,6 +17,10 @@ export default function Editor() {
 		}
 
 		SetTabs(name, undefined);
+
+		if (wrapperRef && wrapperRef.value) {
+			wrapperRef.value = tabs[active()]?.code || '';
+		}
 	}
 
 	function update(
@@ -64,7 +68,7 @@ export default function Editor() {
 		}
 
 		if (chars == undefined) {
-			chars = tabs[active()]?.code?.length! - lines + 1;
+			chars = (tabs[active()]?.code?.length! || 0) - lines + 1;
 		}
 
 		setLines(lines);
@@ -96,7 +100,7 @@ export default function Editor() {
 				onInput={update}
 				ref={wrapperRef}
 			>
-				{tabs[active()]?.code}
+				{tabs[active()]?.code || ''}
 			</textarea>
 			<div class='m-2 flex justify-end gap-2'>
 				<span>Lines: {lines()}</span>
