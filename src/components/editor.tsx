@@ -7,9 +7,15 @@ export default function Editor() {
 	const [chars, setChars] = createSignal<number>();
 	const [limit, setLimit] = createSignal<number>();
 
-	// function removeTab(name: string) {
-	// 	setAllTabs((prev) => prev.filter((tab) => tab !== name));
-	// }
+	let wrapperRef: HTMLTextAreaElement | undefined;
+
+	function removeTab(name: string) {
+		SetTabs((prev) => {
+			delete prev[name];
+			console.log('🚀 ~ prev:', prev);
+			return prev;
+		});
+	}
 
 	function update(
 		e: InputEvent & {
@@ -18,6 +24,14 @@ export default function Editor() {
 		}
 	) {
 		SetTabs(active(), 'code', e.target.value);
+	}
+
+	function changeTabs(name: string) {
+		setActive(name);
+
+		if (wrapperRef && wrapperRef.value) {
+			wrapperRef.value = tabs[active()].code;
+		}
 	}
 
 	function findLimit() {
@@ -63,10 +77,10 @@ export default function Editor() {
 			<div class='m-3 flex gap-3'>
 				{Object.keys(tabs).map((name) => (
 					<div class={`tabs ${name == active() && 'border'}`}>
-						<button onClick={() => setActive(name)}>{name}</button>
-						{/* <button class='close' onClick={() => removeTab(name)}>
+						<button onClick={() => changeTabs(name)}>{name}</button>
+						<button class='close' onClick={() => removeTab(name)}>
 							x
-						</button> */}
+						</button>
 					</div>
 				))}
 				<button class='tabs open'>+</button>
@@ -78,6 +92,7 @@ export default function Editor() {
 				autoCapitalize='off'
 				data-gramm='false'
 				onInput={update}
+				ref={wrapperRef}
 			>
 				{tabs[active()].code}
 			</textarea>
