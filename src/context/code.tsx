@@ -11,6 +11,7 @@ import { SetStoreFunction, Store, createStore } from 'solid-js/store';
 import HTML from '../samples/html.sample?raw';
 import CSS from '../samples/css.sample?raw';
 import JS from '../samples/js.sample?raw';
+import MD from '../samples/markdown.sample?raw';
 
 const initialState = {
 	'index.html': {
@@ -24,6 +25,10 @@ const initialState = {
 	'script.js': {
 		type: 'js',
 		code: JS
+	},
+	'markdown.md': {
+		type: 'md',
+		code: MD
 	}
 };
 
@@ -47,7 +52,7 @@ const CodeContext = createContext<CodeStore>();
 
 export const CodeProvider: ParentComponent = (props) => {
 	const [tab, setTab] = createStore<Tabs>(initialState);
-	const [activeTab, setActiveTab] = createSignal<string>('index.html');
+	const [activeTab, setActiveTab] = createSignal<string>('markdown.md');
 
 	return (
 		<CodeContext.Provider value={[tab, setTab, activeTab, setActiveTab]}>
