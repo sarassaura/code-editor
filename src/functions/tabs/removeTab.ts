@@ -2,7 +2,7 @@ import { CodeStore } from '../../context/code';
 
 export default function removeTab(
 	name: string,
-	wrapper: HTMLTextAreaElement | undefined,
+	screen: HTMLTextAreaElement | null,
 	useTabs: CodeStore
 ) {
 	const [tabs, setTab, activeTab, setActiveTab] = useTabs;
@@ -15,7 +15,7 @@ export default function removeTab(
 
 	setTab(name, undefined);
 
-	if (wrapper && wrapper.value) {
-		wrapper.value = tabs[activeTab()]?.code || '';
+	if (screen && screen.value) {
+		screen.value = tabs[activeTab()]?.code || '';
 	}
 }
