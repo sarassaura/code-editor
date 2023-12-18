@@ -32,16 +32,16 @@ const initialState = {
 	}
 };
 
-type Tab = {
+export type Tab = {
 	type: string;
 	code: string;
 };
 
-type Tabs = {
+export type Tabs = {
 	[key: string]: Tab | undefined;
 };
 
-type CodeStore = [
+export type CodeStore = [
 	Store<Tabs>,
 	SetStoreFunction<Tabs>,
 	Accessor<string>,

@@ -1,5 +1,6 @@
 import { For, createEffect, createSignal, onCleanup, onMount } from 'solid-js';
 import { useTabs } from '../context/code';
+import { removeTab } from '../functions/tabs';
 
 export default function Editor() {
 	const [tabs, SetTabs, active, setActive] = useTabs();
@@ -8,20 +9,6 @@ export default function Editor() {
 	const [limit, setLimit] = createSignal<number>();
 
 	let wrapperRef: HTMLTextAreaElement | undefined;
-
-	function removeTab(name: string) {
-		const anotherTab = Object.keys(tabs).filter((l) => l !== name);
-
-		if (anotherTab.length > 0) {
-			setActive(anotherTab[0]);
-		}
-
-		SetTabs(name, undefined);
-
-		if (wrapperRef && wrapperRef.value) {
-			wrapperRef.value = tabs[active()]?.code || '';
-		}
-	}
 
 	function update(
 		e: InputEvent & {
@@ -86,7 +73,12 @@ export default function Editor() {
 						<button onClick={() => changeTabs(name)} class='tab-name'>
 							{name}
 						</button>
-						<button class='close' onClick={() => removeTab(name)}>
+						<button
+							class='close'
+							onClick={() =>
+								removeTab(name, wrapperRef, [tabs, SetTabs, active, setActive])
+							}
+						>
 							x
 						</button>
 					</div>
