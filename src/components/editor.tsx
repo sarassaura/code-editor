@@ -1,6 +1,7 @@
 import { For, createEffect, createSignal, onCleanup, onMount } from 'solid-js';
 import { useTabs } from '../context/code';
 import { removeTab, changeTabs } from '../functions/tabs';
+import { render } from '../functions/editor';
 
 export default function Editor() {
 	const [tabs, SetTabs, active, setActive] = useTabs();
@@ -9,15 +10,6 @@ export default function Editor() {
 	const [limit, setLimit] = createSignal<number>();
 
 	let wrapperRef: HTMLTextAreaElement | undefined;
-
-	function update(
-		e: InputEvent & {
-			currentTarget: HTMLTextAreaElement;
-			target: HTMLTextAreaElement;
-		}
-	) {
-		SetTabs(active(), 'code', e.target.value);
-	}
 
 	function findLimit() {
 		const one = document.querySelector('.one-letter') as HTMLSpanElement;
@@ -88,7 +80,7 @@ export default function Editor() {
 				autocomplete='off'
 				autoCapitalize='off'
 				data-gramm='false'
-				onInput={update}
+				onInput={(e) => render(e, [tabs, SetTabs, active, setActive])}
 				ref={wrapperRef}
 			>
 				{tabs[active()]?.code || ''}
