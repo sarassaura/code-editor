@@ -1,33 +1,17 @@
-import { For, createEffect, createSignal, onCleanup, onMount } from 'solid-js';
+import { For } from 'solid-js';
 import { useTabs } from '../context/code';
 import { removeTab, changeTabs } from '../functions/tabs';
 import { render } from '../functions/editor';
 import StatusBar from './statusBar';
-import { useStatus } from '../context/status';
-import { findLimit } from '../functions/status';
 
 export default function Editor() {
 	const [tabs, setTab, activeTab, setActiveTab] = useTabs();
-	const [status, setStatus] = useStatus();
 
 	let wrapperRef: HTMLTextAreaElement | undefined;
-	let oneLetter: HTMLSpanElement | undefined;
-
-	onMount(() => {
-		findLimit(oneLetter, setStatus);
-		window.addEventListener('resize', () => findLimit(oneLetter, setStatus));
-	});
-
-	onCleanup(() => {
-		window.removeEventListener('resize', () => findLimit(oneLetter, setStatus));
-	});
 
 	return (
 		<div class='wrapper relative'>
-			<span
-				class='absolute font-mono text-lg one-letter invisible'
-				ref={oneLetter}
-			>
+			<span class='absolute font-mono text-lg one-letter invisible'>
 				<For each={Array(10)}>{() => <span>X</span>}</For>
 			</span>
 			<div class='tab-container '>

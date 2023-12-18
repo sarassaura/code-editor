@@ -1,10 +1,20 @@
-import { createEffect } from 'solid-js';
+import { createEffect, onCleanup, onMount } from 'solid-js';
 import { useStatus } from '../context/status';
 import { CodeStore, useTabs } from '../context/code';
+import { findLimit } from '../functions/status';
 
 export default function StatusBar() {
 	const [tabs, SetTabs, active, setActive] = useTabs();
 	const [status, setStatus] = useStatus();
+
+	onMount(() => {
+		findLimit(setStatus);
+		window.addEventListener('resize', () => findLimit(setStatus));
+	});
+
+	onCleanup(() => {
+		window.removeEventListener('resize', () => findLimit(setStatus));
+	});
 
 	createEffect(() => {
 		let lines = tabs[active()]?.code.match(/\r\n|\r|\n/g)?.length;
