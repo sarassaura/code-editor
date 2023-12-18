@@ -8,12 +8,14 @@ export default function StatusBar() {
 	const [status, setStatus] = useStatus();
 
 	onMount(() => {
-		findLimit(setStatus);
-		window.addEventListener('resize', () => findLimit(setStatus));
+		const oneLetter = document.querySelector('.one-letter') as HTMLSpanElement;
+		findLimit(setStatus, oneLetter);
+		window.addEventListener('resize', () => findLimit(setStatus, oneLetter));
 	});
 
 	onCleanup(() => {
-		window.removeEventListener('resize', () => findLimit(setStatus));
+		const oneLetter = document.querySelector('.one-letter') as HTMLSpanElement;
+		window.removeEventListener('resize', () => findLimit(setStatus, oneLetter));
 	});
 
 	createEffect(() => {
