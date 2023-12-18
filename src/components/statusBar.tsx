@@ -7,14 +7,15 @@ export default function StatusBar() {
 	const [tabs, SetTabs, active, setActive] = useTabs();
 	const [status, setStatus] = useStatus();
 
+	let oneLetter: HTMLSpanElement | null;
+
 	onMount(() => {
-		const oneLetter = document.querySelector('.one-letter') as HTMLSpanElement;
+		oneLetter = document.querySelector('.one-letter') as HTMLSpanElement;
 		findLimit(setStatus, oneLetter);
 		window.addEventListener('resize', () => findLimit(setStatus, oneLetter));
 	});
 
 	onCleanup(() => {
-		const oneLetter = document.querySelector('.one-letter') as HTMLSpanElement;
 		window.removeEventListener('resize', () => findLimit(setStatus, oneLetter));
 	});
 
