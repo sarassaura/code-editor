@@ -5,11 +5,11 @@ export default function changeTabs(
 	wrapper: HTMLTextAreaElement | undefined,
 	useTabs: CodeStore
 ) {
-	const [tabs, SetTabs, active, setActive] = useTabs;
+	const [tabs, setTab, activeTab, setActiveTab] = useTabs;
 
-	setActive(name);
+	setActiveTab(name);
 
 	if (wrapper && wrapper.value) {
-		wrapper.value = tabs[active()]?.code || '';
+		wrapper.value = tabs[activeTab()]?.code || '';
 	}
 }

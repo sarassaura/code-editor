@@ -7,7 +7,7 @@ import { useStatus } from '../context/status';
 import { findLimit } from '../functions/status';
 
 export default function Editor() {
-	const [tabs, SetTabs, active, setActive] = useTabs();
+	const [tabs, setTab, activeTab, setActiveTab] = useTabs();
 	const [status, setStatus] = useStatus();
 
 	let wrapperRef: HTMLTextAreaElement | undefined;
@@ -32,10 +32,15 @@ export default function Editor() {
 			</span>
 			<div class='tab-container '>
 				{Object.keys(tabs).map((name) => (
-					<div class={`tab-items ${name == active() ? 'border' : ''}`}>
+					<div class={`tab-items ${name == activeTab() ? 'border' : ''}`}>
 						<button
 							onClick={() =>
-								changeTabs(name, wrapperRef, [tabs, SetTabs, active, setActive])
+								changeTabs(name, wrapperRef, [
+									tabs,
+									setTab,
+									activeTab,
+									setActiveTab
+								])
 							}
 							class='tab-name'
 						>
@@ -44,7 +49,12 @@ export default function Editor() {
 						<button
 							class='close'
 							onClick={() =>
-								removeTab(name, wrapperRef, [tabs, SetTabs, active, setActive])
+								removeTab(name, wrapperRef, [
+									tabs,
+									setTab,
+									activeTab,
+									setActiveTab
+								])
 							}
 						>
 							x
@@ -59,10 +69,10 @@ export default function Editor() {
 				autocomplete='off'
 				autoCapitalize='off'
 				data-gramm='false'
-				onInput={(e) => render(e, [tabs, SetTabs, active, setActive])}
+				onInput={(e) => render(e, [tabs, setTab, activeTab, setActiveTab])}
 				ref={wrapperRef}
 			>
-				{tabs[active()]?.code || ''}
+				{tabs[activeTab()]?.code || ''}
 			</textarea>
 			<StatusBar />
 		</div>

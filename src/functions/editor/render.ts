@@ -7,7 +7,7 @@ export default function render(
 	},
 	useTabs: CodeStore
 ) {
-	const [tabs, SetTabs, active, setActive] = useTabs;
+	const [tabs, setTab, activeTab, setActiveTab] = useTabs;
 
-	SetTabs(active(), 'code', e.target.value);
+	setTab(activeTab(), 'code', e.target.value);
 }

@@ -51,11 +51,11 @@ export type CodeStore = [
 const CodeContext = createContext<CodeStore>();
 
 export const CodeProvider: ParentComponent = (props) => {
-	const [tab, setTab] = createStore<Tabs>(initialState);
+	const [tabs, setTab] = createStore<Tabs>(initialState);
 	const [activeTab, setActiveTab] = createSignal<string>('markdown.md');
 
 	return (
-		<CodeContext.Provider value={[tab, setTab, activeTab, setActiveTab]}>
+		<CodeContext.Provider value={[tabs, setTab, activeTab, setActiveTab]}>
 			{props.children}
 		</CodeContext.Provider>
 	);

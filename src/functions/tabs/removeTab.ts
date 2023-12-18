@@ -5,17 +5,17 @@ export default function removeTab(
 	wrapper: HTMLTextAreaElement | undefined,
 	useTabs: CodeStore
 ) {
-	const [tabs, SetTabs, active, setActive] = useTabs;
+	const [tabs, setTab, activeTab, setActiveTab] = useTabs;
 
 	const anotherTab = Object.keys(tabs).filter((l) => l !== name);
 
 	if (anotherTab.length > 0) {
-		setActive(anotherTab[0]);
+		setActiveTab(anotherTab[0]);
 	}
 
-	SetTabs(name, undefined);
+	setTab(name, undefined);
 
 	if (wrapper && wrapper.value) {
-		wrapper.value = tabs[active()]?.code || '';
+		wrapper.value = tabs[activeTab()]?.code || '';
 	}
 }
