@@ -1,6 +1,6 @@
 import { For, createEffect, createSignal, onCleanup, onMount } from 'solid-js';
 import { useTabs } from '../context/code';
-import { removeTab } from '../functions/tabs';
+import { removeTab, changeTabs } from '../functions/tabs';
 
 export default function Editor() {
 	const [tabs, SetTabs, active, setActive] = useTabs();
@@ -17,14 +17,6 @@ export default function Editor() {
 		}
 	) {
 		SetTabs(active(), 'code', e.target.value);
-	}
-
-	function changeTabs(name: string) {
-		setActive(name);
-
-		if (wrapperRef && wrapperRef.value) {
-			wrapperRef.value = tabs[active()]?.code || '';
-		}
 	}
 
 	function findLimit() {
@@ -70,7 +62,12 @@ export default function Editor() {
 			<div class='tab-container '>
 				{Object.keys(tabs).map((name) => (
 					<div class={`tab-items ${name == active() ? 'border' : ''}`}>
-						<button onClick={() => changeTabs(name)} class='tab-name'>
+						<button
+							onClick={() =>
+								changeTabs(name, wrapperRef, [tabs, SetTabs, active, setActive])
+							}
+							class='tab-name'
+						>
 							{name}
 						</button>
 						<button
