@@ -1,8 +1,8 @@
-import { For } from 'solid-js';
 import { useTabs } from '../context/code';
 import { removeTab, changeTabs } from '../functions/tabs';
 import { render } from '../functions/editor';
 import StatusBar from './statusBar';
+import OneLetter from './oneLetter';
 
 export default function Editor() {
 	const [tabs, setTab, activeTab, setActiveTab] = useTabs();
@@ -11,9 +11,7 @@ export default function Editor() {
 
 	return (
 		<div class='wrapper relative'>
-			<span class='absolute font-mono text-lg one-letter invisible'>
-				<For each={Array(10)}>{() => <span>X</span>}</For>
-			</span>
+			<OneLetter />
 			<div class='tab-container '>
 				{Object.keys(tabs).map((name) => (
 					<div class={`tab-items ${name == activeTab() ? 'border' : ''}`}>
