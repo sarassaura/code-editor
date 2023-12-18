@@ -28,24 +28,6 @@ export default function Editor() {
 		window.removeEventListener('resize', findLimit);
 	});
 
-	createEffect(() => {
-		let lines = tabs[active()]?.code.match(/\r\n|\r|\n/g)?.length;
-		let chars = tabs[active()]?.code.match(/./g)?.length;
-
-		if (lines !== undefined) {
-			lines++;
-		} else {
-			lines = 1;
-		}
-
-		if (chars == undefined) {
-			chars = (tabs[active()]?.code?.length! || 0) - lines + 1;
-		}
-
-		setStatus('lines', lines);
-		setStatus('chars', chars);
-	});
-
 	return (
 		<div class='wrapper relative'>
 			<span class='absolute font-mono text-lg one-letter invisible'>

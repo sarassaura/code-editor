@@ -1,7 +1,28 @@
+import { createEffect } from 'solid-js';
 import { useStatus } from '../context/status';
+import { CodeStore, useTabs } from '../context/code';
 
 export default function StatusBar() {
+	const [tabs, SetTabs, active, setActive] = useTabs();
 	const [status, setStatus] = useStatus();
+
+	createEffect(() => {
+		let lines = tabs[active()]?.code.match(/\r\n|\r|\n/g)?.length;
+		let chars = tabs[active()]?.code.match(/./g)?.length;
+
+		if (lines !== undefined) {
+			lines++;
+		} else {
+			lines = 1;
+		}
+
+		if (chars == undefined) {
+			chars = (tabs[active()]?.code?.length! || 0) - lines + 1;
+		}
+
+		setStatus('lines', lines);
+		setStatus('chars', chars);
+	});
 
 	return (
 		<div class='m-2 flex justify-end gap-2'>
