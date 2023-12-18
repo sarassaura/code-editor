@@ -4,33 +4,30 @@ import { removeTab, changeTabs } from '../functions/tabs';
 import { render } from '../functions/editor';
 import StatusBar from './statusBar';
 import { useStatus } from '../context/status';
+import { findLimit } from '../functions/status';
 
 export default function Editor() {
 	const [tabs, SetTabs, active, setActive] = useTabs();
 	const [status, setStatus] = useStatus();
 
 	let wrapperRef: HTMLTextAreaElement | undefined;
-
-	function findLimit() {
-		const one = document.querySelector('.one-letter') as HTMLSpanElement;
-		const parentWidth = (one.parentElement as HTMLDivElement)?.offsetWidth - 32;
-		const letter = one.offsetWidth / 10;
-
-		setStatus('limit', parentWidth / letter);
-	}
+	let oneLetter: HTMLSpanElement | undefined;
 
 	onMount(() => {
-		findLimit();
-		window.addEventListener('resize', findLimit);
+		findLimit(oneLetter, setStatus);
+		window.addEventListener('resize', () => findLimit(oneLetter, setStatus));
 	});
 
 	onCleanup(() => {
-		window.removeEventListener('resize', findLimit);
+		window.removeEventListener('resize', () => findLimit(oneLetter, setStatus));
 	});
 
 	return (
 		<div class='wrapper relative'>
-			<span class='absolute font-mono text-lg one-letter invisible'>
+			<span
+				class='absolute font-mono text-lg one-letter invisible'
+				ref={oneLetter}
+			>
 				<For each={Array(10)}>{() => <span>X</span>}</For>
 			</span>
 			<div class='tab-container '>
