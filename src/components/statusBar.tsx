@@ -1,11 +1,13 @@
-import { createEffect, onCleanup, onMount } from 'solid-js';
+import { Show, createEffect, onCleanup, onMount } from 'solid-js';
 import { useStatus } from '../context/status';
-import { CodeStore, useTabs } from '../context/code';
+import { useTabs } from '../context/code';
 import { findLimit } from '../functions/status';
+import { useElement } from '../context/element';
 
 export default function StatusBar() {
 	const [tabs, SetTabs, active, setActive] = useTabs();
 	const [status, setStatus] = useStatus();
+	const [editor, setEditor] = useElement();
 
 	let oneLetter: HTMLSpanElement | null;
 
@@ -13,10 +15,12 @@ export default function StatusBar() {
 		oneLetter = document.querySelector('.one-letter') as HTMLSpanElement;
 		findLimit(setStatus, oneLetter);
 		window.addEventListener('resize', () => findLimit(setStatus, oneLetter));
+		// window.addEventListener('selectionchange', () => selection(setStatus));
 	});
 
 	onCleanup(() => {
 		window.removeEventListener('resize', () => findLimit(setStatus, oneLetter));
+		// window.removeEventListener('selectionchange', () => selection(setStatus));
 	});
 
 	createEffect(() => {
@@ -42,8 +46,11 @@ export default function StatusBar() {
 			<span>Lines: {status['lines']}</span>
 			<span>Chars: {status['chars']}</span>
 			<span>|</span>
-			<span>Ln {0},</span>
-			<span>Col {0}</span>
+			<span>Ln {status['ln']},</span>
+			<span>Col {status['col']}</span>
+			<Show when={status['sel']}>
+				<span>({status['sel']} selected)</span>
+			</Show>
 			<span>|</span>
 			<span>Wrap: {Math.floor(status['limit']!)}ch</span>
 		</div>

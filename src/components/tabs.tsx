@@ -1,15 +1,10 @@
-import { onMount } from 'solid-js';
 import { useTabs } from '../context/code';
 import { changeTabs, removeTab } from '../functions/tabs';
+import { useElement } from '../context/element';
 
 export default function Tabs() {
 	const [tabs, setTab, activeTab, setActiveTab] = useTabs();
-
-	let screen: HTMLTextAreaElement | null;
-
-	onMount(() => {
-		screen = document.querySelector('.editor');
-	});
+	const [editor, setEditor] = useElement();
 
 	return (
 		<div class='tab-container '>
@@ -17,7 +12,12 @@ export default function Tabs() {
 				<div class={`tab-items ${name == activeTab() ? 'border' : ''}`}>
 					<button
 						onClick={() =>
-							changeTabs(name, screen, [tabs, setTab, activeTab, setActiveTab])
+							changeTabs(name, editor(), [
+								tabs,
+								setTab,
+								activeTab,
+								setActiveTab
+							])
 						}
 						class='tab-name'
 					>
@@ -26,7 +26,7 @@ export default function Tabs() {
 					<button
 						class='close'
 						onClick={() =>
-							removeTab(name, screen, [tabs, setTab, activeTab, setActiveTab])
+							removeTab(name, editor(), [tabs, setTab, activeTab, setActiveTab])
 						}
 					>
 						x
