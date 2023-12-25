@@ -9,15 +9,21 @@ export default function selection(
 ) {
 	const start = editor()?.selectionStart;
 	const end = editor()?.selectionEnd;
-	// const dir = editor()?.selectionDirection;
 	const value = editor()?.value;
+	const dir = editor()?.selectionDirection;
 
-	console.log('ok');
+	if (
+		typeof start == 'number' &&
+		typeof end == 'number' &&
+		typeof value == 'string'
+	) {
+		let cut;
 
-	if (start && end && value) {
-		let cut = value.substring(0, end).split(/\r\n?|\n|\u2028|\u2029/);
-
-		console.log(cut);
+		if (dir == 'forward' || dir == 'none') {
+			cut = value.substring(0, end).split(/\r\n?|\n|\u2028|\u2029/);
+		} else {
+			cut = value.substring(0, start).split(/\r\n?|\n|\u2028|\u2029/);
+		}
 
 		setStatus('ln', cut.length);
 		setStatus('col', cut[cut.length - 1].length);
