@@ -1,7 +1,7 @@
 import { Show, createEffect, onCleanup, onMount } from 'solid-js';
 import { useStatus } from '../context/status';
 import { useTabs } from '../context/code';
-import { findLimit } from '../functions/status';
+import { findLimit, selection } from '../functions/status';
 import { useElement } from '../context/element';
 
 export default function StatusBar() {
@@ -15,12 +15,16 @@ export default function StatusBar() {
 		oneLetter = document.querySelector('.one-letter') as HTMLSpanElement;
 		findLimit(setStatus, oneLetter);
 		window.addEventListener('resize', () => findLimit(setStatus, oneLetter));
-		// window.addEventListener('selectionchange', () => selection(setStatus));
+		window.addEventListener('selectionchange', () =>
+			selection(setStatus, editor)
+		);
 	});
 
 	onCleanup(() => {
 		window.removeEventListener('resize', () => findLimit(setStatus, oneLetter));
-		// window.removeEventListener('selectionchange', () => selection(setStatus));
+		window.removeEventListener('selectionchange', () =>
+			selection(setStatus, editor)
+		);
 	});
 
 	createEffect(() => {
