@@ -17,16 +17,18 @@ export default function selection(
 		typeof end == 'number' &&
 		typeof value == 'string'
 	) {
-		let cut;
+		let cut, space;
 
 		if (dir == 'forward' || dir == 'none') {
 			cut = value.substring(0, end).split(/\r\n?|\n|\u2028|\u2029/);
+			space = value.substring(start, end).split(/\r\n?|\n|\u2028|\u2029/);
 		} else {
 			cut = value.substring(0, start).split(/\r\n?|\n|\u2028|\u2029/);
+			space = value.substring(end, start).split(/\r\n?|\n|\u2028|\u2029/);
 		}
 
 		setStatus('ln', cut.length);
 		setStatus('col', cut[cut.length - 1].length);
-		setStatus('sel', Math.abs(end - start));
+		setStatus('sel', Math.abs(end - start) - space.length + 1);
 	}
 }
